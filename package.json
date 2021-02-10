@@ -1,0 +1,21 @@
+{
+  "name": "generator-sinosun-operation",
+  "version": "0.0.1",
+  "description": "兆日科技运营平台脚手架",
+  "scripts": {},
+  "author": "huxudong",
+  "private": false,
+  "license": "ISC",
+  "publishConfig": {
+    "registry": "http://10.0.5.26:8081/repository/sinosun-front-npm-hosted"
+  },
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^3.2.0"
+  }
+}

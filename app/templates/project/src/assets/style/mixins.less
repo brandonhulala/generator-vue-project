@@ -1,0 +1,130 @@
+@import "./variables.less";
+
+.r1px(@border-radius, @color: @bc-inline, @style: solid) {
+    position: relative;
+    border-radius: @border-radius;
+    &:before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        bottom: -50%;
+        left: -50%;
+        right: -50%;
+        z-index: -1;
+        -webkit-transform: scale(0.5);
+        transform: scale(0.5);
+        border-style: @style;
+        border-width: 1px;
+        border-color: @bc-inline;
+        border-radius: 2 * @border-radius;
+    }
+}
+.bb1px(@color: @bc-inline, @left: 0, @right: 0, @style: solid) {
+    position: relative;
+    &:after {
+        content: "";
+        position: absolute;
+        left: @left;
+        right: @right;
+        bottom: 0;
+        height: 1px;
+        border-bottom: 1px @style @color;
+        transform: scaleY(0.5);
+        -webkit-transform: scaleY(0.5);
+    }
+}
+.bt1px(@color: @bc-inline, @left: 0, @right: 0, @style: solid) {
+    position: relative;
+    &:after {
+        content: "";
+        position: absolute;
+        left: @left;
+        right: @right;
+        top: 0;
+        height: 1px;
+        border-top: 1px @style @color;
+        transform: scaleY(0.5);
+        -webkit-transform: scaleY(0.5);
+    }
+}
+.bl1px(@color: @bc-inline, @top: 0, @bottom: 0, @style: solid) {
+    position: relative;
+    &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: @top;
+        bottom: @bottom;
+        width: 1px;
+        border-left: 1px @style @color;
+        transform: scaleX(0.5);
+        -webkit-transform: scaleX(0.5);
+    }
+}
+.br1px(@color: @bc-inline, @top: 0, @bottom: 0, @style: solid) {
+    position: relative;
+    &:before {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: @top;
+        bottom: @bottom;
+        width: 1px;
+        border-right: 1px @style @color;
+        transform: scaleX(0.5);
+        -webkit-transform: scaleX(0.5);
+    }
+}
+
+/*添加中划线*/
+.del(){
+    padding: 0 0.1rem;
+    position: relative;
+    &:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 1px;
+        background-color: @fc-info;
+    }
+}
+
+/*显示@line行,超过的部分显示...*/
+.line-clamp(@line){
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.flex-box(){
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+}
+.flex(@value: 1){
+    -webkit-box-flex: @value;      
+    -moz-box-flex: @value;        
+    -webkit-flex: @value;          
+    -ms-flex: @value;              
+    flex: @value;                  
+}
+.justify-content(@value: center){
+    -webkit-box-pack: @value;
+    -webkit-justify-content: @value;
+    -moz-justify-content: @value;
+    -ms-justify-content: @value;
+    -o-justify-content: @value;
+    justify-content: @value;
+}
+.align-items(@value: center){
+    -ms-flex-align: @value;
+    -webkit-align-items: @value;
+    -moz-align-items: @value;
+    align-items: @value;
+}
+
