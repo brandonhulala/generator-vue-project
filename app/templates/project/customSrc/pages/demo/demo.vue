@@ -1,8 +1,8 @@
 <!--
  * @Author: huxudong
  * @Date: 2021-01-14 10:45:03
- * @LastEditTime: 2021-01-19 10:58:32
- * @Description: 测试页面
+ * @LastEditTime: 2021-02-23 09:16:49
+ * @Description: 根组件
 -->
 <script>
 import Demo from "@/pages/demo/demo.vue";

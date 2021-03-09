@@ -1,15 +1,14 @@
 /*
  * @Author: huxudong
  * @Date: 2020-12-04 15:04:05
- * @LastEditTime: 2021-02-07 09:56:46
+ * @LastEditTime: 2021-03-12 14:06:42
  * @Description: 上传相关的接口
  */
 import BaseApi from '../lib/BaseApi';
 import BaseResponse from 'sinosun-operation-ui/lib/NetApi/BaseResponse';
 import ApiUrl from './ApiUrl';
-import SystemParam from '../model/System/SystemParam';
-import { MimeType } from 'sinosun-operation-ui/lib/utils/fileUtil';
 import { transferUpLoadUrl } from '../lib/extend';
+const MimeType = require('sinosun-operation-ui/assets/json/MimeType');
 
 class UploadApi extends BaseApi {
     // 获取文件上传地址
@@ -28,8 +27,6 @@ class UploadApi extends BaseApi {
     // 将文件上传到服务器
     doUpload(file: any, address: any): Promise<BaseResponse> {
         const { upload, download } = address;
-
-        const { pathPrefix } = new SystemParam({}).init();
         const uploadUrl = transferUpLoadUrl(upload);
 
         let fileType = file.type, fileName = file.name;
@@ -42,7 +39,7 @@ class UploadApi extends BaseApi {
             'Content-Type': fileType,
         }, {
             apiType: '0',
-            baseURL: pathPrefix,
+            baseURL: '',
             token: '',
             timeout: 1000 * 60 * 3
         }).then(res => {

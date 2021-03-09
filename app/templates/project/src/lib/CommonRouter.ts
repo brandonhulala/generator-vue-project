@@ -1,14 +1,13 @@
 /*
  * @Author: huxudong
  * @Date: 2020-12-09 18:38:06
- * @LastEditTime: 2021-02-09 16:23:41
+ * @LastEditTime: 2021-02-23 14:40:24
  * @Description: 公共路由配置
  */
 import Vue from 'vue';
 import Router from 'vue-router';
 Vue.use(Router);
 
-import store from './CommonStore';
 import { showToast } from 'sinosun-operation-ui/lib/utils/commonUtil';
 
 // 创建一个路由实例
@@ -27,10 +26,12 @@ router.authCode = '';
 
 // 设置路由拦截器
 router.beforeEach((to, from, next) => {
-    // 本地开发不校验权限，线上环境才会校验权限
+    // 本地开发不校验权限
     if (process.env.NODE_ENV == 'development') {
         next();
-    } else {
+    }
+    // 线上环境才会校验权限
+    else {
         const CommonApi = top['CommonApi'];
 
         if (CommonApi) {
@@ -43,24 +44,6 @@ router.beforeEach((to, from, next) => {
             showToast('暂无访问权限');
         }
     }
-});
-router.afterEach((to) => {
-    // 在子页面中，改变路由之后，给菜单地址添加路由hash
-    if (window['CommonApi']) return;
-
-    const { currentMenuURL } = store.state.systemParam;
-
-    let newMenuURL = '', idx = currentMenuURL.indexOf('#');
-    if (idx == -1) {
-        newMenuURL = currentMenuURL + '#' + to.fullPath;
-    } else {
-        newMenuURL = currentMenuURL.substring(0, idx) + '#' + to.fullPath;
-    }
-
-    store.commit('changeSystemParam', {
-        prevMenuURL: currentMenuURL,
-        currentMenuURL: newMenuURL
-    });
 });
 
 export default router;

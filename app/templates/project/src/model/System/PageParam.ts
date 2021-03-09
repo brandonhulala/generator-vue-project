@@ -1,7 +1,7 @@
 /*
  * @Author: huxudong
  * @Date: 2020-11-13 18:09:27
- * @LastEditTime: 2021-02-07 11:22:45
+ * @LastEditTime: 2021-03-11 09:36:31
  * @Description: 分页参数
  */
 import store from '../../lib/CommonStore';
@@ -66,16 +66,9 @@ class PageParam {
         this.curPageTotalNum = curPageTotalNum;
     }
 
-    // 添加一条
-    addOne(): void {
-        this.total++;
-        if (Math.floor(this.total / this.pageSize) > this.pageIndex) this.totalPage++;
-    }
-
-    // 删除一条
+    // 删除一条，在删除成功之后、请求下一页数据之前调用
     delOne(minimum: number = 1): void {
-        this.total = this.total > 0 ? this.total - 1 : 0;
-        if (this.curPageTotalNum > minimum) this.pageIndex--;
+        if (this.curPageTotalNum <= minimum) this.pageIndex--;
     }
 }
 
