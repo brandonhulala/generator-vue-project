@@ -1,14 +1,14 @@
 /*
  * @Author: huxudong
  * @Date: 2021-01-14 10:45:03
- * @LastEditTime: 2021-01-20 14:40:26
+ * @LastEditTime: 2021-03-08 14:49:33
  * @Description: babel配置文件
  */
 module.exports = {
     "presets": [
         [
             "@babel/preset-env", { // 取代了preset-es20**系列的babel预设
-                "modules": false, // 对ES6的模块文件不做转化，以便使用tree shaking、sideEffects等
+                "modules": "auto", // 默认为auto，如果取umd表示使用通用的模块规范，如果取false表示强制对ES6的模块文件不做任何转化
                 "corejs": {
                     "version": 3, // 如果升级到3，删除babel-polyfill，安装core-js和regenerator-runtime
                     "proposals": true // 搞定一些提案级别的特性
@@ -34,14 +34,6 @@ module.exports = {
                 "libraryName": "sinosun-operation-ui",
                 "libraryDirectory": "components",
                 "camel2DashComponentName": false
-            }
-        ],
-        [ // 按需加载项目内的业务模块
-            "babel-plugin-transform-imports", {
-                "pageConfig": {
-                    "transform": "../../bankConfig/pageConfig.js",
-                    "preventFullImport": true
-                }
             }
         ]
     ]

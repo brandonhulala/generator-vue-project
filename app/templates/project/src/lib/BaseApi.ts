@@ -1,7 +1,7 @@
 /*
  * @Author: huxudong
  * @Date: 2020-12-09 18:38:14
- * @LastEditTime: 2021-02-07 09:14:17
+ * @LastEditTime: 2021-03-03 17:38:11
  * @Description: 基础接口类，业务服务都是基于这个类来发送请求
  */
 import BaseRequest from 'sinosun-operation-ui/lib/NetApi/BaseRequest'; // 基础请求类
@@ -15,16 +15,20 @@ class BaseApi extends BaseRequest {
         return store.state.systemParam.reqApiType;
     }
 
+    // 获取路径前缀
+    getPathPrefix(): string {
+        return store.state.systemParam.pathPrefix;
+    }
+
     // 获取基础路径
-    getBaseURL() {
-        const systemParam = store.state.systemParam;
-        return systemParam.pathPrefix + systemParam.baseURL;
+    getBaseURL(): string {
+        return store.state.systemParam.baseURL;
     }
 
     // 获取身份令牌
     getToken(): Promise<string> {
         return new Promise(async (resolve, reject) => {
-            const tokenType = store.state.systemParam.tokenType;
+            const { tokenType } = store.state.systemParam;
             let token = '';
 
             // 获取顶层窗口上的公共方法

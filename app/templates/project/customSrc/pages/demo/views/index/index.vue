@@ -1,14 +1,14 @@
 <!--
  * @Author: huxudong
  * @Date: 2021-01-14 10:45:03
- * @LastEditTime: 2021-01-14 14:36:00
- * @Description: 列表页
+ * @LastEditTime: 2021-02-23 09:16:57
+ * @Description: 例子
 -->
 <script>
-import DemoList from "@/pages/demo/views/list/list.vue";
+import DemoIndex from "@/pages/demo/views/index/index.vue";
 
 export default {
-    extends: DemoList,
+    extends: DemoIndex,
     created() {
         this.myFn();
     },
@@ -20,4 +20,4 @@ export default {
 };
 </script>
 
-<style src="./list.less" lang="less" scoped></style>
+<style src="./index.less" lang="less" scoped></style>

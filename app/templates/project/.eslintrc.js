@@ -1,7 +1,7 @@
 /*
  * @Author: huxudong
  * @Date: 2020-12-09 18:38:06
- * @LastEditTime: 2021-02-07 11:13:58
+ * @LastEditTime: 2021-03-04 08:49:13
  * @Description: eslint配置文件
  */
 module.exports = {
@@ -22,6 +22,7 @@ module.exports = {
 		"no-string-literal": 0, // 关闭抛出异常的检测
 		"no-useless-escape": 0, // 关闭转义字符的检测
 		"no-console": 0, // 关闭console检测
+		"no-debugger": 0, // 关闭debugger检测
 		"no-irregular-whitespace": 0, // 关闭空格检测
 		"no-async-promise-executor": 0, // 关闭异步函数检测
 		"no-cond-assign": 0, // 关闭赋值语句的检测

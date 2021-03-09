@@ -1,7 +1,7 @@
 /*
  * @Author: huxudong
  * @Date: 2020-12-08 17:23:55
- * @LastEditTime: 2021-02-04 15:23:22
+ * @LastEditTime: 2021-03-03 17:41:45
  * @Description: 存储
  */
 import BaseStorage from '../../lib/BaseStorage';
@@ -28,7 +28,7 @@ class Storage {
         const { storageType, storageKey } = result;
 
         this.storageType = storageType;
-        this.storageKey = BaseStorage.formatKey(storageKey);
+        this.storageKey = storageKey;
     }
 
     // 把当前实例的属性提取出来放在一个JSON对象中
@@ -47,16 +47,15 @@ class Storage {
     init(): any {
         const obj = this.get();
 
-        // 优先取本地参数，没有就取刚实例化时的结果
-        return obj ? this.constructor(obj) : this;
-    }
-    // 保存本地参数
-    save(): void {
-        this.set(this.toJson());
-    }
-    // 清空本地参数
-    remove(): void {
-        this.set('');
+        // 如果本地没有这个参数，就取实例化的结果，并将结果存到本地
+        if (!obj || !Object.keys(obj).length) {
+            this.set(this.toJson());
+            return this;
+        }
+        // 如果本地已有这个参数，就按这个参数的值进行实例化
+        else {
+            return this.constructor(obj);
+        }
     }
 }
 

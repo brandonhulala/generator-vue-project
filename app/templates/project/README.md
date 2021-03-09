@@ -1,17 +1,17 @@
 <!--
  * @Author: huxudong
  * @Date: 2020-12-09 18:38:06
- * @LastEditTime: 2021-02-08 08:46:10
+ * @LastEditTime: 2021-03-04 16:14:54
  * @Description: 使用说明
 -->
 ## 项目结构
-``` 
+```  
 webpack
  |--build                       # webpack配置文件
  |--config                      # webpack可配置选项
  |--bankConfig                  # 从src中抽离出来的可配置选项
     |--bisConfig                  # 业务配置
-    |--pageConfig.js              # 页面配置
+    |--routeConfig.js             # 路由配置
  |--customSrc                   # 基于src的定制目录
  |--src                         # 项目的开发目录
     |--assets                     # 项目的静态资源，参与webpack的编译
@@ -45,7 +45,7 @@ webpack
     |--shims-tsx.d.ts             # 允许在vue中编写.tsx文件
   |--package.json               # 项目配置文件，包含项目的名称、版本号、命令行、第三方依赖等
   |--tsconfig.json              # typescript配置文件
-  |--.babelrc.js                # babel配置文件
+  |--babel.config.js            # babel配置文件
   |--.eslintrc.js               # eslint配置文件
   |--.eslintignore              # eslint忽略的文件列表
   |--.gitignore                 # git忽略的文件列表
@@ -61,7 +61,6 @@ webpack
   + webpack：4+
   + babel：7+
   + babel-loader：8+
-  + babel-plugin-transform-imports：1+
   + core-js：3+（还要安装regenerator-runtime，用于替换babel-polyfill）
   + less-loader: 5+
   + autoprefixer: 9+
@@ -79,7 +78,7 @@ webpack
     - 在src/service目录中，添加项目的接口交互
   + 页面
     - 在src/pages目录下新建目录，每个目录对应一个页面，目录名就是页面名
-    - 在bankConfig/pageConfig.js文件中，配置该页面的引用路径
+    - 在bankConfig/routeConfig.js文件中，配置该页面中的路由引用
     - 如果要定制页面，就要在customSrc中添加该页面的定制目录
   + 模块
     - 规范：尽量使用ES6的import和export，如果不是在顶部引入，可以使用require
@@ -109,9 +108,10 @@ webpack
 
 ## 注意
   + 运营平台的项目分成两种：顶部的主项目和iframe中的子项目
-    1.顶部主项目会在top对象上绑定一些公共方法，给子项目使用
-    2.顶部主项目会在localStorage中存放一些公共参数，给子项目使用
+    - 顶部主项目会在top对象上绑定一些公共方法，给子项目使用
+    - 顶部主项目会在localStorage中存放一些公共参数，给子项目使用
   + 通常情况下，子项目的运行需要用到顶部项目的公共参数，在本地启动子项目之后，由于获取不到顶部项目，页面就会报错，所以需要将这些公共参数手动复制到子项目中，方法如下：
-    1.在浏览器上打开线上dev环境的运营平台，登录成功之后，打开浏览器的控制台
-    2.在控制台上输入CommonApi.getPlatformParam()，获取顶部主项目所有的公共参数
-    3.将userInfo和systemParam复制到本地子项目的localStorage中，然后刷新子项目的页面
+    - 首先，在浏览器上打开线上dev环境的运营平台，登录成功之后，打开浏览器的控制台
+    - 然后，在控制台上输入CommonApi.getPlatformParam()，获取顶部主项目所有的公共参数
+    - 接着，将userInfo和systemParam复制到本地子项目的localStorage中，然后刷新子项目的页面
+    - 注意，如果公共参数的名称里面有系统后缀名，复制到localStorage的时候，需要把系统后缀名删掉

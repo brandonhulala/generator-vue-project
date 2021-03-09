@@ -1,7 +1,7 @@
 /*
  * @Author: huxudong
  * @Date: 2020-12-08 17:23:55
- * @LastEditTime: 2021-02-04 14:29:10
+ * @LastEditTime: 2021-03-03 17:39:23
  * @Description: 公共状态管理
  */
 import Vue from 'vue';
@@ -24,51 +24,46 @@ const store: any = new Vuex.Store({
     },
     mutations: {
         changeUserInfo(state, data) { // 改变用户信息并保存到本地
-            const userInfo = state.userInfo.get();
-
-            state.userInfo = new UserInfo({
-                ...userInfo,
+            const userInfo = {
+                ...state.userInfo.get(),
+                ...state.userInfo.toJson(),
                 ...data
-            });
+            }
 
-            state.userInfo.save();
+            state.userInfo.set(userInfo);
+            state.userInfo = new UserInfo(userInfo);
         },
         removeUserInfo(state) { // 清空本地中的用户信息
+            state.userInfo.set('');
             state.userInfo = new UserInfo({});
-
-            state.userInfo.remove();
         },
         changeUserConfig(state, data) { // 改变用户配置并保存到本地
-            const userConfig = state.userConfig.get();
+            const userConfig = {
+                ...state.userConfig.get(),
+                ...state.userConfig.toJson(),
+                list: state.userConfig.setConfigValue(data).map(e => e.toJson()),
+            }
 
-            state.userConfig.list = state.userConfig.setConfigValue(data).map(e => e.toJson());
-
-            state.userConfig = new UserConfig({
-                ...userConfig,
-                ...state.userConfig.toJson()
-            });
-
-            state.userConfig.save();
+            state.userConfig.set(userConfig);
+            state.userConfig = new UserConfig(userConfig);
         },
         removeUserConfig(state) { // 清空本地中的用户配置
+            state.userConfig.set('');
             state.userConfig = new UserConfig({});
-
-            state.userConfig.remove();
         },
         changeSystemParam(state, data) { // 改变系统参数并保存到本地
-            const systemParam = state.systemParam.get();
-
-            state.systemParam = new SystemParam({
-                ...systemParam,
+            const systemParam = {
+                ...state.systemParam.get(),
+                ...state.systemParam.toJson(),
                 ...data
-            });
+            }
 
-            state.systemParam.save();
+            state.systemParam.set(systemParam);
+            state.systemParam = new SystemParam(systemParam);
         },
         removeSystemParam(state) { // 清空本地中的系统参数
+            state.systemParam.set('');
             state.systemParam = new SystemParam({});
-
-            state.systemParam.remove();
         }
     }
 });
