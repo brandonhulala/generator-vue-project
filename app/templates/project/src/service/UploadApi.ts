@@ -1,7 +1,7 @@
 /*
  * @Author: huxudong
  * @Date: 2020-12-04 15:04:05
- * @LastEditTime: 2021-03-12 14:06:42
+ * @LastEditTime: 2021-03-19 10:40:44
  * @Description: 上传相关的接口
  */
 import BaseApi from '../lib/BaseApi';

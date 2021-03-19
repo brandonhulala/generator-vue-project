@@ -1,7 +1,7 @@
 /*
  * @Author: huxudong
  * @Date: 2021-01-14 10:45:03
- * @LastEditTime: 2021-03-16 14:08:39
+ * @LastEditTime: 2021-03-19 10:40:55
  * @Description: babel配置文件
  */
 module.exports = {
