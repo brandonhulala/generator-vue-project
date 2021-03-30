@@ -1,7 +1,7 @@
 /*
  * @Author: huxudong
  * @Date: 2021-01-14 10:45:03
- * @LastEditTime: 2021-01-19 10:56:52
+ * @LastEditTime: 2021-03-30 11:25:19
  * @Description: 基础的webpack配置文件
  */
 const webpack = require('webpack');

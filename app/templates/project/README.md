@@ -1,7 +1,7 @@
 <!--
  * @Author: huxudong
  * @Date: 2020-12-09 18:38:06
- * @LastEditTime: 2021-03-04 16:14:54
+ * @LastEditTime: 2021-03-30 13:30:09
  * @Description: 使用说明
 -->
 ## 项目结构
@@ -21,7 +21,7 @@ webpack
       |--BaseStorage.ts             # 公共存储
       |--CommonRouter.ts            # 公共路由
       |--CommonStore.ts             # 公共状态
-      |--extend.js                  # 扩展方法
+      |--extend.ts                  # 扩展方法
     |--components                 # 项目的公共组件
     |--model                      # 项目的数据模型   
       |--User                       # 用户类
@@ -108,10 +108,24 @@ webpack
 
 ## 注意
   + 运营平台的项目分成两种：顶部的主项目和iframe中的子项目
-    - 顶部主项目会在top对象上绑定一些公共方法，给子项目使用
-    - 顶部主项目会在localStorage中存放一些公共参数，给子项目使用
-  + 通常情况下，子项目的运行需要用到顶部项目的公共参数，在本地启动子项目之后，由于获取不到顶部项目，页面就会报错，所以需要将这些公共参数手动复制到子项目中，方法如下：
-    - 首先，在浏览器上打开线上dev环境的运营平台，登录成功之后，打开浏览器的控制台
-    - 然后，在控制台上输入CommonApi.getPlatformParam()，获取顶部主项目所有的公共参数
-    - 接着，将userInfo和systemParam复制到本地子项目的localStorage中，然后刷新子项目的页面
-    - 注意，如果公共参数的名称里面有系统后缀名，复制到localStorage的时候，需要把系统后缀名删掉
+    - 顶部项目会在top对象上绑定一些公共方法，给子项目使用
+    - 顶部项目会在localStorage中存放一些公共参数，给子项目使用
+  + 通常情况下，子项目的运行需要用到顶部项目的公共参数，在本地启动子项目之后，由于获取不到顶部项目，页面会报错，目前的解决方案有2种
+    - 1.方法一：将顶部项目的公共参数手动复制到子项目
+      - 首先，在浏览器上打开线上dev环境的运营平台，登录成功之后，打开浏览器的控制台
+      - 然后，在控制台上输入CommonApi.getPlatformParam()，获取顶部主项目所有的公共参数
+      - 接着，将userInfo和systemParam复制到本地子项目的localStorage中，然后刷新子项目的页面
+      - 注意，如果公共参数的名称里面有系统后缀名，复制到localStorage的时候，需要把系统后缀名删掉
+    - 2.方法二：在本地同时启动顶部项目和子项目
+      - (1)对于顶部项目
+        - package.json文件中的port默认为8081
+        - 在config/pageProxy.js文件中，配置并导出子项目的反向代理
+        - 在config/index.js文件中，引入子项目的反向代理，然后追加到dev下的proxy，注意要放在其他代理的前面
+      - (2)对于子项目
+        - package.json文件中的port不能为8081
+        - 在config/index.js文件中，将dev下的assetsPublicPath改成`http://${ipv4}:${package.port}/`
+        - 在build/webpack.base.config.js文件中，在字体图标的loader的options中添加
+          ```publicPath: config.webpack.isProd ? config.build.extractPublicPath : '/'```
+        - 在build/webpack.dev.config.js文件中，令hot属性为false
+
+

@@ -1,7 +1,7 @@
 /*
  * @Author: huxudong
  * @Date: 2021-01-14 10:45:03
- * @LastEditTime: 2021-02-07 17:25:09
+ * @LastEditTime: 2021-03-30 11:15:56
  * @Description: 本地开发的webpack配置文件
  */
 const merge = require('webpack-merge');
@@ -24,8 +24,8 @@ module.exports = merge(baseConfig, {
         port, // 端口
         open: false, // 不使用默认的浏览器打开插件
         proxy, // 配置反向代理
-        overlay: true, // 编译出错就会弹出一个遮罩层
         hot: true, // 启动热更新功能
+        overlay: true, // 编译出错就会弹出一个遮罩层
         stats: 'errors-only', // 只在命令行显示错误信息
         // quiet: true // 关闭命令行的所有提示信息
         clientLogLevel: 'error', // 只在浏览器的控制台显示错误信息   

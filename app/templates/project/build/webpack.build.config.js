@@ -1,7 +1,7 @@
 /*
  * @Author: huxudong
  * @Date: 2021-01-14 10:45:03
- * @LastEditTime: 2021-02-07 17:25:17
+ * @LastEditTime: 2021-03-30 09:05:35
  * @Description: 生产环境的webpack配置文件
  */
 const merge = require('webpack-merge');
@@ -14,8 +14,7 @@ const baseConfig = require('./webpack.base.config');
 
 module.exports = merge(baseConfig, {
     mode: 'production',
-    // devtool: 'source-map',
-    devtool: 'cheap-module-source-map',
+    devtool: 'source-map',
 
     stats: {
         children: false
