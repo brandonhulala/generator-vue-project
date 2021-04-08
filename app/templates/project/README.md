@@ -1,7 +1,7 @@
 <!--
  * @Author: huxudong
  * @Date: 2020-12-09 18:38:06
- * @LastEditTime: 2021-03-30 13:43:09
+ * @LastEditTime: 2021-04-02 10:10:16
  * @Description: 使用说明
 -->
 ## 项目结构
@@ -123,9 +123,14 @@ webpack
         - 在config/index.js文件中，引入子项目的反向代理，然后追加到dev下的proxy，注意要放在其他代理的前面
       - (2)对于子项目
         - package.json文件中的port不能为8081，并且要与顶部项目config/pageProxy.js中的代理端口保持一致
-        - 在config/index.js文件中，将dev下的assetsPublicPath改成`http://${ipv4}:${package.port}/`
+        - 在config/index.js文件中，将dev中的assetsPublicPath改成`http://${ipv4}:${package.port}/`
         - 在build/webpack.base.config.js文件中，在字体图标的loader的options中添加
           ```publicPath: config.webpack.isProd ? config.build.extractPublicPath : '/'```
-        - 在build/webpack.dev.config.js文件中，令hot属性为false
+        - 在build/webpack.dev.config.js文件中，在devServer中添加headers配置
+          ```
+          headers: {
+              'Access-Control-Allow-Origin': '*'
+          }
+          ```
 
 

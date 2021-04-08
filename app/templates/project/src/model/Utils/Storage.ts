@@ -1,7 +1,7 @@
 /*
  * @Author: huxudong
  * @Date: 2020-12-08 17:23:55
- * @LastEditTime: 2021-03-03 17:41:45
+ * @LastEditTime: 2021-04-06 10:45:08
  * @Description: 存储
  */
 import BaseStorage from '../../lib/BaseStorage';
@@ -37,7 +37,8 @@ class Storage {
     }
     // 取出本地参数
     get(key: string = ''): any {
-        return BaseStorage.getStorage(this.storageType, this.storageKey, key ? [key] : [], true);
+        const obj = BaseStorage.getStorage(this.storageType, this.storageKey, [], true);
+        return !key ? obj : obj[key];
     }
     // 设置本地参数
     set(value: any = ''): void {

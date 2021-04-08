@@ -1,7 +1,7 @@
 /*
  * @Author: huxudong
  * @Date: 2020-12-08 17:23:55
- * @LastEditTime: 2021-03-03 17:39:23
+ * @LastEditTime: 2021-04-06 17:30:23
  * @Description: 公共状态管理
  */
 import Vue from 'vue';
@@ -11,6 +11,7 @@ Vue.use(Vuex);
 import UserInfo from '../model/User/UserInfo';
 import UserConfig from '../model/User/UserConfig';
 import SystemParam from '../model/System/SystemParam';
+import MenuState from '../model/System/MenuState';
 
 // 创建一个仓库实例
 const store: any = new Vuex.Store({
@@ -18,6 +19,7 @@ const store: any = new Vuex.Store({
         userInfo: null as any, // 用户信息的初始状态值
         userConfig: null as any, // 用户配置的初始状态值
         systemParam: null as any, // 系统参数的初始状态值
+        menuState: null as any // 菜单状态的初始状态值
     },
     getters: {
 
@@ -64,6 +66,20 @@ const store: any = new Vuex.Store({
         removeSystemParam(state) { // 清空本地中的系统参数
             state.systemParam.set('');
             state.systemParam = new SystemParam({});
+        },
+        changeMenuState(state, data) { // 改变本地中的菜单状态
+            const menuState = {
+                ...state.menuState.get(),
+                ...state.menuState.toJson(),
+                ...data
+            };
+
+            state.menuState.set(menuState);
+            state.menuState = new MenuState(menuState);
+        },
+        removeMenuState(state) { // 清空本地中的菜单状态
+            state.menuState.set('');
+            state.menuState = new MenuState({});
         }
     }
 });
@@ -73,6 +89,7 @@ store.initState = function () {
     this.state.userInfo = new UserInfo({}).init();
     this.state.userConfig = new UserConfig({}).init();
     this.state.systemParam = new SystemParam({}).init();
+    this.state.menuState = new MenuState({}).init();
 }
 
 export default store;
