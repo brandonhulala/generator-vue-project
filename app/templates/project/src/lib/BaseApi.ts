@@ -1,13 +1,12 @@
 /*
  * @Author: huxudong
  * @Date: 2020-12-09 18:38:14
- * @LastEditTime: 2021-03-03 17:38:11
+ * @LastEditTime: 2021-04-13 10:07:01
  * @Description: 基础接口类，业务服务都是基于这个类来发送请求
  */
 import BaseRequest from 'sinosun-operation-ui/lib/NetApi/BaseRequest'; // 基础请求类
 import BaseResponse from 'sinosun-operation-ui/lib/NetApi/BaseResponse'; // 基础响应类
 import store from './CommonStore'; // 参数管理
-import getMockData from '../mock/getMockData'; // 模拟数据
 
 class BaseApi extends BaseRequest {
     // 获取接口类型
@@ -58,14 +57,16 @@ class BaseApi extends BaseRequest {
             return store.state.systemParam.isReqCrypt;
         }
     }
+}
 
-    // 模拟get请求
-    doGet_mock(url: string, param?: any): Promise<BaseResponse> {
+// 只在开发环境下引入mock数据
+if (process.env.NODE_ENV == 'development') {
+    const getMockData = require('../mock/getMockData');
+
+    BaseApi['doGet_mock'] = function (url: string, param?: any): Promise<BaseResponse> {
         return getMockData(url);
     }
-
-    // 模拟post请求
-    doPost_mock(url: string, param?: any): Promise<BaseResponse> {
+    BaseApi['doPut_mock'] = function (url: string, param?: any): Promise<BaseResponse> {
         return getMockData(url);
     }
 }

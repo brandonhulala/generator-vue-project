@@ -1,7 +1,7 @@
 /*
  * @Author: huxudong
  * @Date: 2021-01-14 10:45:03
- * @LastEditTime: 2021-03-30 11:25:19
+ * @LastEditTime: 2021-04-12 14:45:01
  * @Description: 基础的webpack配置文件
  */
 const webpack = require('webpack');
@@ -55,6 +55,12 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue', '.json', '.jsx', '.ts', '.tsx'], // 可省略的后缀名
         alias // 模块别名
+    },
+
+    externals: { // 使用外链引入的npm包
+        jszip: 'JSZip',
+        xlsx: 'XLSX',
+        'text-encoding': 'TextEncodingPolyfill'
     },
 
     module: {
