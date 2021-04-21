@@ -4,15 +4,22 @@
 ### 
 #! /bin/bash
 
-### 根据 json 数据获取对应key的 value
-function get_json_value()
+#从指定json文件中读取指定key的 value
+function getJsonValue()
 {
-    local json=$1
+    local fileName=$1
     local key=$2
-    local value=$(echo -e $(cat package.json | awk -F "[version]" '/version/{print$0}'))
-    value=$(echo $value | awk -F "[:]" '/version/{print$2}')    # 输出："3.6.4",
+
+    local value=$(echo -e $(cat $fileName | awk -F "[$key]" "/$key/{print\$0}"))
+    
+    value=$(echo $value | awk -F "[:]" "/$key/{print\$2}")    # 输出："3.6.4",
+#    echo "value2:$value"
     value=${value:2}      # 输出 3.6.4", xxxx ,
+#    echo "value3:$value"
+
     value=${value%%\,*}   # 输出 3.6.4"
+#    echo "value4:$value"
+
     value=${value%\"*}    # 输出：3.6.4
     echo ${value}
 }
@@ -41,18 +48,23 @@ npm run build
 
 # 4.package name 规范
 product_path="$(ls dist)"
-product_name=$(basename "$PWD")
+# 取当前文件夹名称作为product_name，不合适，改成从项目的package.json来获取"name"对应的 value
+#product_name=$(basename "$PWD")
+product_name=$(getJsonValue "package.json" "name")
+version=$(getJsonValue "package.json" "version")
+
 time_str=$(date "+%Y%m%d")
-packageJsonPath=package.json
-version=$(get_json_value $(cat $packageJsonPath) version)
-package_name="bizmate-static-${product_name}-$version+${time_str}.zip"
+# package_name="bizmate-static-${product_name}-$version+${time_str}.zip" 按照规范 zip 换成 tar
+package_name="bizmate-static-${product_name}-$version+${time_str}.tar"
 echo "application-name=${product_path}  version=$version  package-name=${package_name}  path=$(pwd)/${package_name}"
 
 # 5.打包 项目
 if [ -n "${product_path}" ];then
   echo "build in dist: ${product_path}"
   cp -r dist/${product_path} .
-  zip -r ${package_name} ${product_path}
+  # zip -r ${package_name} ${product_path}
+  tar czvf ${package_name} ${product_path}
+
   echo -e "application-name=${product_path}\nversion=$version\npackage-name=${package_name}\npath=$(pwd)/${package_name}" > product-info.txt
   mkdir devops_deploy
   cp product-info.txt devops_deploy
